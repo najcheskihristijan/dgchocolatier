@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DG Chocolatier — Бутик чоколатерија. Белгиска традиција.</title>
+<meta name="description" content="DG Chocolatier — рачно изработени бонбони од најфино белгиско чоколадо." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cocoa: #1a0e08;
+    --cocoa-2: #221610;
+    --cocoa-3: #2d1d14;
+    --cocoa-4: #3a261a;
+    --gold: #c9a96e;
+    --gold-deep: #9a7848;
+    --gold-glow: #e8d4a9;
+    --blush: #f7e5e0;
+    --cream: #f5ede0;
+    --line: rgba(201, 169, 110, 0.2);
+    --text: #e8dccb;
+    --text-mute: #a89378;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cocoa);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.65;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Spotlight + vignette atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 169, 110, 0.08), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(247, 229, 224, 0.04), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.8 0 0 0 0 0.6 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: overlay;
+  }
+
+  ::selection { background: var(--gold); color: var(--cocoa); }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(26, 14, 8, 0.65);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-label {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 56px;
+  }
+  .brand-label img {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2.75rem;
+  }
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--gold); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+  }
+  .hero-stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.5;
+    animation: twinkle 5s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+  }
+  .star:nth-child(1) { top: 18%; left: 12%; animation-delay: 0s; }
+  .star:nth-child(2) { top: 32%; right: 15%; animation-delay: 1.4s; }
+  .star:nth-child(3) { bottom: 28%; left: 18%; animation-delay: 2.6s; }
+  .star:nth-child(4) { bottom: 18%; right: 22%; animation-delay: 0.7s; }
+  .star:nth-child(5) { top: 50%; left: 4%; animation-delay: 3.2s; }
+  .star:nth-child(6) { top: 70%; right: 6%; animation-delay: 2.1s; }
+
+  .eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.44em;
+    color: var(--gold);
+    margin-bottom: 3rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-weight: 400;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(4rem, 11vw, 11rem);
+    line-height: 0.92;
+    color: var(--text);
+    letter-spacing: -0.025em;
+    margin-bottom: 2rem;
+    max-width: 1100px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    background: linear-gradient(180deg, var(--gold-glow), var(--gold-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--text-mute);
+    max-width: 600px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.4;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 2.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-weight: 400;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(101%);
+    transition: transform 0.5s cubic-bezier(0.8, 0, 0.2, 1);
+    z-index: -1;
+  }
+  .hero-cta:hover { color: var(--cocoa); }
+  .hero-cta:hover::before { transform: translateY(0); }
+
+  .scroll-cue {
+    margin-top: 6rem;
+    color: var(--gold);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    opacity: 0.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .scroll-cue::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    animation: scroll-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(0.5); opacity: 0.3; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* Section base */
+  section {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* === ABOUT === */
+  .about {
+    padding: 10rem 3rem 8rem;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -25px -25px 25px 25px;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .about-image-wrap img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    filter: brightness(0.85) contrast(1.05) sepia(0.15);
+  }
+
+  .about-text .eyebrow {
+    margin-bottom: 2rem;
+  }
+  .about-text .eyebrow::before { display: none; }
+  .about-text .eyebrow::after { width: 80px; }
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    margin-bottom: 2.5rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .about-text h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .about-text p {
+    font-size: 1.08rem;
+    color: var(--text-mute);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* === Belgian story (pull quote) === */
+  .belgian {
+    padding: 8rem 3rem;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at center, rgba(201, 169, 110, 0.06), transparent 70%);
+  }
+  .belgian-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .belgian-mark {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: -1rem;
+    opacity: 0.6;
+  }
+  .belgian blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 3rem;
+    letter-spacing: -0.01em;
+  }
+  .belgian blockquote em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .belgian cite {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--text-mute);
+    font-style: normal;
+  }
+
+  /* === PRODUCTS === */
+  .products {
+    padding: 10rem 3rem 8rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+  .section-header .eyebrow {
+    margin-bottom: 1.5rem;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    line-height: 1.0;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .section-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .product {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: default;
+  }
+  .product-img {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--cocoa-3);
+  }
+  .product-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85) contrast(1.05);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .product:hover .product-img img {
+    filter: brightness(1) contrast(1.05);
+    transform: scale(1.04);
+  }
+  .product-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    transition: border-color 0.5s;
+    pointer-events: none;
+  }
+  .product:hover .product-img::after {
+    border-color: var(--gold);
+  }
+  .product-num {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 0.88rem;
+    letter-spacing: 0.1em;
+    z-index: 2;
+  }
+  .product h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .product h4 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .product .meta {
+    font-size: 0.7rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    margin-bottom: 0.85rem;
+    font-weight: 400;
+  }
+  .product p {
+    font-size: 0.95rem;
+    color: var(--text-mute);
+    line-height: 1.6;
+  }
+
+  /* === CUSTOM === */
+  .custom {
+    padding: 10rem 3rem 8rem;
+    background: var(--cocoa-2);
+    position: relative;
+  }
+  .custom::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(201, 169, 110, 0.05), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(247, 229, 224, 0.03), transparent 50%);
+    pointer-events: none;
+  }
+  .custom-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .custom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 5rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .custom-card {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--line);
+    transition: background 0.5s;
+  }
+  .custom-card:last-child { border-right: none; }
+  .custom-card:hover { background: rgba(201, 169, 110, 0.04); }
+  .custom-card .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+  }
+  .custom-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.9rem;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .custom-card h4 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .custom-card p {
+    font-size: 0.96rem;
+    color: var(--text-mute);
+    line-height: 1.65;
+  }
+
+  /* === CONTACT === */
+  .contact {
+    padding: 10rem 3rem 4rem;
+    text-align: center;
+    position: relative;
+  }
+  .contact-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .contact h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.0;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.025em;
+  }
+  .contact h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .contact-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--text-mute);
+    margin-bottom: 5rem;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--line);
+  }
+  .contact-block .label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+  .contact-block .value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+    font-weight: 300;
+  }
+  .contact-block a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .contact-block a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .contact-block .meta {
+    font-size: 0.85rem;
+    color: var(--text-mute);
+  }
+
+  footer {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    border-top: 1px solid var(--line);
+    color: var(--text-mute);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+  }
+  footer .mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 1.05rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  /* Reveals */
+  .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.25rem; }
+    .brand-label img { height: 38px; }
+    nav ul { gap: 1.25rem; }
+    nav a { font-size: 0.6rem; letter-spacing: 0.18em; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about, .custom, .products, .contact, .belgian { padding: 5rem 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-image-wrap::before { display: none; }
+    .product-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .custom-grid, .contact-grid { grid-template-columns: 1fr; }
+    .custom-card { border-right: none; border-bottom: 1px solid var(--line); }
+    .custom-card:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<nav>
+  <a href="#top" class="brand-label" aria-label="DG Chocolatier">
+    <img src="logo.png" alt="DG Chocolatier" />
+  </a>
+  <ul>
+    <li><a href="#about">Приказна</a></li>
+    <li><a href="#products">Колекција</a></li>
+    <li><a href="#custom">Нарачки</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-stars">
+    <svg class="star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+    <svg class="star" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+    <svg class="star" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+    <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+    <svg class="star" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+    <svg class="star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13 11 L24 12 L13 13 L12 24 L11 13 L0 12 L11 11 Z"/></svg>
+  </div>
+
+  <div class="eyebrow">DG Chocolatier · Est. 2019</div>
+  <h1>Белгиска <em>уметност</em><br />во секое парче.</h1>
+  <p class="hero-sub">Бутик чоколатерија. Рачно изработени бонбони од најфино белгиско чоколадо — за оние моменти кои бараат повеќе.</p>
+  <a href="#products" class="hero-cta">Откриј ја колекцијата →</a>
+
+  <div class="scroll-cue">Скрол</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image-wrap">
+    <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=900&auto=format&fit=crop&q=80" alt="Студиото на DG Chocolatier" />
+  </div>
+  <div class="about-text">
+    <div class="eyebrow">Приказна</div>
+    <h2>Создадено<br />со <em>страст.</em></h2>
+    <p><strong>Во DG Chocolatier, секој бонбон е приказна.</strong> Приказна за белгиската традиција, за прецизното темперирање, за стрпливоста на рачната изработка.</p>
+    <p>Користиме само најфино белгиско чоколадо — она кое со векови ја освојува светската гастрономија. Без скратени патишта. Без замени. Само внимание, чисти состојки и време.</p>
+    <p>Секоја колекција се создава во мали серии, во студиото — често со часови работа за да се постигне совршеното чувство во устата. Тоа е она што го прави DG Chocolatier — не индустрија, туку занает.</p>
+  </div>
+</section>
+
+<!-- BELGIAN STORY (pull quote) -->
+<section class="belgian">
+  <div class="belgian-inner">
+    <div class="belgian-mark">“</div>
+    <blockquote>
+      Белгија не е само земја — таа е <em>дом на најфиниот чоколат.</em> Минимум 35% какао. Сто проценти какао-маслото. Никакви замени, никакви компромиси.
+    </blockquote>
+    <cite>— Белгиски стандард на чоколадо, од 1894</cite>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-header">
+    <div class="eyebrow">Колекција</div>
+    <h2>Парчиња создадени<br /><em>со внимание.</em></h2>
+  </div>
+
+  <div class="product-grid">
+    <div class="product">
+      <div class="product-img">
+        <div class="product-num">I</div>
+        <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&auto=format&fit=crop&q=80" alt="Класични пралини" />
+      </div>
+      <h4>Класични <em>пралини</em></h4>
+      <div class="meta">Срцето на колекцијата</div>
+      <p>Тенко чоколадно куќичка околу кадифена ганаш — крем-чоколадо, лешник, кафе, малина.</p>
+    </div>
+
+    <div class="product">
+      <div class="product-img">
+        <div class="product-num">II</div>
+        <img src="https://images.unsplash.com/photo-1582005450386-52b25f82d9ce?w=800&auto=format&fit=crop&q=80" alt="Трфли" />
+      </div>
+      <h4>Трфли</h4>
+      <div class="meta">Кадифено задоволство</div>
+      <p>Мек ганаш, валан рачно во какао, во бел чоколад или во ситно сечени лешници.</p>
+    </div>
+
+    <div class="product">
+      <div class="product-img">
+        <div class="product-num">III</div>
+        <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?w=800&auto=format&fit=crop&q=80" alt="Сезонски" />
+      </div>
+      <h4>Сезонски <em>колекции</em></h4>
+      <div class="meta">Ограничени · Специјални</div>
+      <p>Четири пати годишно. Лимит, тиква, кардамом, смокви, рузмарин. Се појавуваат и исчезнуваат.</p>
+    </div>
+
+    <div class="product">
+      <div class="product-img">
+        <div class="product-num">IV</div>
+        <img src="https://images.unsplash.com/photo-1622445275576-721325763afe?w=800&auto=format&fit=crop&q=80" alt="Подароци" />
+      </div>
+      <h4>Подарок <em>кутии</em></h4>
+      <div class="meta">Спакувано со внимание</div>
+      <p>Кутии од 9, 16 или 25 парчиња — со рачно врзана лента, посвета, и колекција по ваш избор.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOM -->
+<section class="custom" id="custom">
+  <div class="custom-inner">
+    <div class="section-header">
+      <div class="eyebrow">По нарачка</div>
+      <h2>За <em>посебни</em> моменти.</h2>
+    </div>
+
+    <div class="custom-grid">
+      <div class="custom-card">
+        <div class="num">I.</div>
+        <h4>Свадби</h4>
+        <p>Бонбони за вашиот посебен ден — персонализирани кутии за гости, монограми, специјални вкусови. Минимум 50 кутии. Консултација вклучена.</p>
+      </div>
+      <div class="custom-card">
+        <div class="num">II.</div>
+        <h4>Корпоративни <em>подароци</em></h4>
+        <p>За клиенти, партнери, тимови. Брендирано пакување, лого, посвета. Од 20 кутии. Создаваме впечаток — траен и сладок.</p>
+      </div>
+      <div class="custom-card">
+        <div class="num">III.</div>
+        <h4>Прослави</h4>
+        <p>Роденденски, годишнини, крштевки, специјални моменти. Кажете ни што славите — ние ќе создадеме нешто соодветно.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="eyebrow">Контакт</div>
+    <h2>Дојди ни.<br />Или <em>побарај ни.</em></h2>
+    <div class="contact-sub">Прилеп, Македонија · Понеделник – Сабота</div>
+
+    <div class="contact-grid">
+      <div class="contact-block">
+        <div class="label">Телефон</div>
+        <div class="value"><a href="tel:{{PHONE}}">{{PHONE}}</a></div>
+        <div class="meta">10:00 – 20:00</div>
+      </div>
+      <div class="contact-block">
+        <div class="label">Instagram</div>
+        <div class="value"><a href="https://instagram.com/{{INSTAGRAM}}" target="_blank">@{{INSTAGRAM}}</a></div>
+        <div class="meta">Дневни објави · Нови колекции</div>
+      </div>
+      <div class="contact-block">
+        <div class="label">Локација</div>
+        <div class="value">{{LOCATION}}</div>
+        <div class="meta">Недела затворено</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="mark">DG Chocolatier</span>
+  © 2026 · chocobonbon.mk · Рачно изработено во Македонија
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.eyebrow, .hero h1, .hero-sub, .hero-cta, .about-image-wrap, .about-text > *, .belgian-inner, .product, .custom-card, .contact h2, .contact-sub, .contact-block');
+  reveals.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  document.querySelectorAll('.product').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.1) + 's';
+  });
+  document.querySelectorAll('.custom-card').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.12) + 's';
+  });
+</script>
+
+</body>
+</html>

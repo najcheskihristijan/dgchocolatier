@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DG Chocolatier — Дизајн преглед · 3 верзии</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f4ede0;
+    --bg-2: #ebe0cc;
+    --ink: #2b1810;
+    --ink-2: #4a2c1a;
+    --rose: #c9a499;
+    --rose-deep: #b08272;
+    --gold: #b8956a;
+    --line: #cdb89b;
+    --paper: #faf3e7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.25 0 0 0 0 0.12 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* === HEADER === */
+  header {
+    padding: 3rem 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .logo-mark {
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+  .logo-mark img {
+    height: 130px;
+    width: auto;
+    display: block;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--rose-deep);
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--rose-deep);
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  header .sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--ink-2);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.45;
+    font-weight: 300;
+  }
+  .domain-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-2);
+  }
+  .domain-tag .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #6fa86b;
+    box-shadow: 0 0 8px #6fa86b;
+  }
+
+  /* === GRID === */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 3rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .card {
+    background: var(--paper);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 60px -25px rgba(75, 44, 26, 0.25),
+      0 0 0 1px rgba(205, 184, 155, 0.5);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 50px 90px -25px rgba(75, 44, 26, 0.35),
+      0 0 0 1px rgba(205, 184, 155, 0.5);
+  }
+  .card.primary {
+    border: 2px solid var(--gold);
+    box-shadow:
+      0 30px 60px -25px rgba(75, 44, 26, 0.35),
+      0 0 0 1px var(--gold);
+  }
+  .card.primary::before {
+    content: '✓ ИЗБРАНА ВЕРЗИЈА';
+    position: absolute;
+    top: 14px; right: 14px;
+    background: var(--gold);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    padding: 0.4rem 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    border-radius: 100px;
+    z-index: 5;
+    font-weight: 500;
+  }
+  .preview-frame {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .preview-frame iframe {
+    width: 200%;
+    height: 200%;
+    border: 0;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    pointer-events: none;
+  }
+  .preview-frame .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(250, 243, 231, 0.4));
+    pointer-events: none;
+  }
+
+  .card-body {
+    padding: 2rem 1.75rem 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--rose-deep);
+    margin-bottom: 0.85rem;
+  }
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 2rem;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .card h3 em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  .card p {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+  .swatch-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .sw {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .specs {
+    display: flex;
+    gap: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-2);
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--line);
+    margin-bottom: 1.5rem;
+  }
+  .specs span {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .specs span b {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .view-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    border-radius: 100px;
+    transition: all 0.4s ease;
+    border: 1px solid var(--ink);
+  }
+  .view-btn:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+  .view-btn .arrow {
+    display: inline-block;
+    transition: transform 0.4s;
+  }
+  .view-btn:hover .arrow { transform: translateX(6px); }
+
+  .card.primary .view-btn {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .card.primary .view-btn:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  /* === FOOTER NOTES === */
+  .notes {
+    padding: 4rem 3rem 5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .notes-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 2.5rem 3rem;
+  }
+  .notes-card h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+  .notes-card h2 em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  .notes-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .notes-card li {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(205, 184, 155, 0.4);
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .notes-card li:last-child { border-bottom: none; }
+  .notes-card li::before {
+    content: '→';
+    color: var(--rose-deep);
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .notes-card code {
+    background: var(--bg-2);
+    padding: 0.1rem 0.45rem;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+
+  footer.foot {
+    text-align: center;
+    padding: 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-2);
+    position: relative;
+    z-index: 1;
+  }
+  footer.foot span {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.95rem;
+    color: var(--rose-deep);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; }
+    header { padding: 2rem 1.5rem 1rem; }
+    .notes { padding: 2rem 1.5rem 3rem; }
+    .notes-card { padding: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo-mark"><img src="logo.png" alt="DG Chocolatier" /></a>
+  <div class="eyebrow">Дизајн преглед · 3 верзии</div>
+  <h1>Изберете го <em>правилниот</em> правец.</h1>
+  <p class="sub">Три различни визуелни концепти за вашата онлајн страна. Кликнете на секоја верзија за целосен преглед.</p>
+  <div class="domain-tag">
+    <span class="dot"></span>
+    chocobonbon.mk · подготвена за пренасочување
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- V1 -->
+  <div class="card primary">
+    <div class="preview-frame">
+      <iframe src="index.html" loading="lazy" title="Light version"></iframe>
+      <div class="overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-tag">Верзија 01 · Светла</div>
+      <h3>Топла <em>и занаетчиска</em></h3>
+      <p>Кремасто-беж позадина, какао тонови, пудро-розови акценти. Елегантен серифен фонт, рачно-изработено чувство. Класичен бутик чоколатерија изглед — топол, женствен, премиум.</p>
+
+      <div class="swatch-row">
+        <div class="sw" style="background:#faf3e7"></div>
+        <div class="sw" style="background:#f5ede0"></div>
+        <div class="sw" style="background:#c9a499"></div>
+        <div class="sw" style="background:#b8956a"></div>
+        <div class="sw" style="background:#3d2817"></div>
+      </div>
+
+      <div class="specs">
+        <span><b>Fraunces</b> Serif</span>
+        <span><b>Manrope</b> Sans</span>
+        <span><b>Cream</b> Theme</span>
+      </div>
+
+      <a href="index.html" class="view-btn" target="_blank">Преглед <span class="arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- V2 -->
+  <div class="card">
+    <div class="preview-frame">
+      <iframe src="v2-dark.html" loading="lazy" title="Dark version"></iframe>
+      <div class="overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-tag">Верзија 02 · Темна</div>
+      <h3>Темна <em>и луксузна</em></h3>
+      <p>Длабока какао-црна позадина со топли златни акценти. Cormorant Garamond италик. Бутик-чоколатерија со драматичен ефект, како велвет-кутија. Премиум и интимно.</p>
+
+      <div class="swatch-row">
+        <div class="sw" style="background:#1a0e08"></div>
+        <div class="sw" style="background:#2d1d14"></div>
+        <div class="sw" style="background:#c9a96e"></div>
+        <div class="sw" style="background:#e8d4a9"></div>
+        <div class="sw" style="background:#e8dccb"></div>
+      </div>
+
+      <div class="specs">
+        <span><b>Cormorant</b> Serif</span>
+        <span><b>Jost</b> Sans</span>
+        <span><b>Cocoa</b> Theme</span>
+      </div>
+
+      <a href="v2-dark.html" class="view-btn" target="_blank">Преглед <span class="arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- V3 -->
+  <div class="card">
+    <div class="preview-frame">
+      <iframe src="v3-editorial.html" loading="lazy" title="Editorial version"></iframe>
+      <div class="overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-tag">Верзија 03 · Уреднички</div>
+      <h3>Магазин <em>и модерно</em></h3>
+      <p>Бело-црн контраст, огромна Bodoni типографија, страници како во модно списание. Колонски текст, drop caps, бројки на страници. За оние кои сакаат нешто посебно и фешн.</p>
+
+      <div class="swatch-row">
+        <div class="sw" style="background:#fafaf7"></div>
+        <div class="sw" style="background:#f3f0e8"></div>
+        <div class="sw" style="background:#0a0908"></div>
+        <div class="sw" style="background:#8b3a1f"></div>
+        <div class="sw" style="background:#c47a4f"></div>
+      </div>
+
+      <div class="specs">
+        <span><b>Bodoni</b> Display</span>
+        <span><b>JetBrains</b> Mono</span>
+        <span><b>Magazine</b> Style</span>
+      </div>
+
+      <a href="v3-editorial.html" class="view-btn" target="_blank">Преглед <span class="arrow">→</span></a>
+    </div>
+  </div>
+
+</div>
+
+<div class="notes">
+  <div class="notes-card">
+    <h2>Што <em>понатаму</em></h2>
+    <ul>
+      <li>Изберете една од трите верзии (или комбинација) — секоја може дополнително да се прилагоди.</li>
+      <li>Заменете ги плеј­холдерите: <code>{{PHONE}}</code>, <code>{{INSTAGRAM}}</code>, <code>{{LOCATION}}</code> со вистинските податоци.</li>
+      <li>Додадете вистински фотографии од колекцијата — тие во моментов се од Unsplash (плеј­холдери).</li>
+      <li>Откако ќе одберете верзија, ја качуваме на хостингот и го пренасочуваме <code>chocobonbon.mk</code>.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="foot">
+  <span>DG Chocolatier</span>
+  Design preview · 2026 · chocobonbon.mk
+</footer>
+
+</body>
+</html>
